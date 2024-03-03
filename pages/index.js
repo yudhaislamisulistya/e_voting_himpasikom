@@ -67,7 +67,8 @@ export default function Home() {
 
   return (
     <div>
-      <div className='bg-indigo-600 text-white text-center py-4'>
+      <h1>Udah tutup lohhh</h1>
+      {/* <div className='bg-indigo-600 text-white text-center py-4'>
         <h1 className='text-2xl font-bold'>Pemilihan Ketua HIMPASIKOM UGM Periode 2024/2024</h1>
         <p className='text-sm'>Silakan pilih salah satu kandidat berikut</p>
       </div>
@@ -120,23 +121,7 @@ export default function Home() {
           </div>
           <div>
             {/* Konten halaman dan form... */}
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="mt-6 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              {isSubmitting ? (
-                <>
-                  <span className="spinner"></span>
-                  <span className="ml-2">Mengirim...</span>
-                </>
-              ) : (
-                'Submit Vote'
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
+            
     </div>
   );
 }
