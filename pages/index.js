@@ -10,30 +10,35 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Data dummy untuk kandidat, gantilah dengan data sebenarnya
 const candidates = [
-  { id: 1, name: 'Kandidat 1', imageUrl: '/images/hanum.jpg' },
-  { id: 2, name: 'Kandidat 2', imageUrl: '/images/salam.jpg' },
-  { id: 3, name: 'Kandidat 3', imageUrl: '/images/hans.jpg' },
-  { id: 4, name: 'Kandidat 4', imageUrl: '/images/resky.jpg' },
-  { id: 5, name: 'Kandidat 5', imageUrl: '/images/wafa.jpg' },
+  { id: 1, name: 'Kandidat 1 Hanum Khairana Fatmah', imageUrl: '/images/hanum.jpg' },
+  { id: 2, name: 'Kandidat 2 Muhammad Salam', imageUrl: '/images/salam.jpg' },
+  { id: 3, name: 'Kandidat 3 Muhammad Nahrowi', imageUrl: '/images/hans.jpg' },
+  { id: 4, name: 'Kandidat 4 Resky Awaluddin Fajar Syarif', imageUrl: '/images/resky.jpg' },
+  { id: 5, name: 'Kandidat 5 Mochammad Itmamul Wafa', imageUrl: '/images/wafa.jpg' },
 ];
 
 export default function Home() {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false); // State baru untuk melacak status pengiriman
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     // Validasi email untuk domain "@mail.ugm.ac.id"
     if (!email.endsWith('@mail.ugm.ac.id')) {
       toast.error('Silakan gunakan email dengan domain @mail.ugm.ac.id');
-      return; // Menghentikan fungsi jika validasi gagal
+      setIsSubmitting(false); // Pengiriman selesai, set isSubmitting kembali ke false
+      return;
     }
 
     // Validasi pemilihan kandidat/voting
     if (!selectedCandidate) {
       toast.error('Silakan pilih salah satu kandidat sebelum submit.');
-      return; // Menghentikan fungsi jika validasi gagal
+      setIsSubmitting(false); // Pengiriman selesai, set isSubmitting kembali ke false
+      return;
     }
 
     try {
@@ -54,6 +59,8 @@ export default function Home() {
       } else {
         toast.error('Terjadi kesalahan, silakan coba lagi.');
       }
+    } finally {
+      setIsSubmitting(false); // Pengiriman selesai atau terjadi error, set isSubmitting kembali ke false
     }
   }
 
@@ -72,7 +79,7 @@ export default function Home() {
               <div key={candidate.id} className='flex flex-col items-center p-4 shadow-lg rounded-lg'>
                 <Image src={candidate.imageUrl} alt={candidate.name} width={100} height={100} className='rounded-full' />
                 <div className='mt-3 text-center'>
-                  <div className='text-xl font-medium'>{candidate.name}</div>
+                  <div className='font-medium'>{candidate.name}</div>
                   <label htmlFor={`candidate-${candidate.id}`} className='cursor-pointer'>
                     <input
                       id={`candidate-${candidate.id}`}
@@ -110,12 +117,23 @@ export default function Home() {
               - Satu email hanya bisa melakukan voting sekali
             </p>
           </div>
-          <button
-            type='submit'
-            className='mt-6 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-          >
-            Submit Vote
-          </button>
+          <div>
+            {/* Konten halaman dan form... */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="mt-6 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              {isSubmitting ? (
+                <>
+                  <span className="spinner"></span>
+                  <span className="ml-2">Mengirim...</span>
+                </>
+              ) : (
+                'Submit Vote'
+              )}
+            </button>
+          </div>
         </form>
       </div>
     </div>
