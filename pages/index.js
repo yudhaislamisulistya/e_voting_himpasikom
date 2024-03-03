@@ -115,7 +115,7 @@ export default function Home() {
             <p className='text-sm text-gray-500'>
               - Merupakan mahasiswa aktif MKOM UGM <br />
               - voting online hanya dapat di isi oleh mahasiswa MKOM UGM yang tidak bisa hadir di tempat pemilihan <br />
-              - Satu email hanya bisa melakukan voting sekali
+              - Satu email (email UGM) hanya bisa melakukan voting sekali
             </p>
           </div>
           <div>
