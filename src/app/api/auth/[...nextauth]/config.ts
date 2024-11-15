@@ -42,10 +42,11 @@ export const authOptions: AuthOptions = {
       }
       return false
     },
-    async jwt({ token, account, profile }) {
+    async jwt({ token, user, account, profile }) {
       if (account) {
+        const fromGoogle = account.provider === 'google'
         token.user = {
-          email: profile?.email ?? '',
+          email: (fromGoogle ? profile?.email : user.email) ?? 'xxx',
           trusted: account.provider == 'google',
         }
       }
