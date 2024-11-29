@@ -31,14 +31,20 @@ export const authOptions: AuthOptions = {
   ],
   session: {
     strategy: 'jwt',
-    maxAge: 5 * 60,
+    maxAge: 30 * 60,
   },
   callbacks: {
     async signIn({ user, account, profile }) {
       if (account?.provider === 'google') {
-        return profile?.email?.endsWith('@mail.ugm.ac.id') ?? false
+        return (
+          (profile?.email?.endsWith('@mail.ugm.ac.id') ?? false) ||
+          (profile?.email?.endsWith('@ugm.ac.id') ?? false)
+        )
       } else if (account?.provider === 'credentials') {
-        return user.email?.endsWith('@mail.ugm.ac.id') ?? false
+        return (
+          (user.email?.endsWith('@mail.ugm.ac.id') ?? false) ||
+          (user.email?.endsWith('@ugm.ac.id') ?? false)
+        )
       }
       return false
     },

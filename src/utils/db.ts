@@ -1,12 +1,25 @@
 import { Database, Tables } from '@/types/db'
 import { createClient } from '@supabase/supabase-js'
-import { encrypt } from './enc'
+import { decrypt, encrypt } from './enc'
+import { str2date } from './date'
 
 const supabaseUrl = process.env.SUPABASE_URL ?? ''
 const supabaseKey = process.env.SUPABASE_KEY ?? ''
 const supabase = createClient<Database>(supabaseUrl, supabaseKey)
 
 export type CandidateType = Tables<'candidates'>
+
+export const getStartEndDate = async () => {
+  const { data, error } = await supabase
+    .from('configs')
+    .select('name,value')
+    .in('name', ['start_date', 'end_date'])
+
+  const startDate = (data ?? []).find((v) => v.name === 'start_date')?.value
+  const endDate = (data ?? []).find((v) => v.name === 'end_date')?.value
+
+  return { startDate: str2date(startDate), endDate: str2date(endDate) }
+}
 
 export const getCandidates = async () => {
   const { data, error } = await supabase.from('candidates').select()
