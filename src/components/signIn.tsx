@@ -2,7 +2,7 @@
 import { signIn } from 'next-auth/react'
 import { MouseEventHandler, useRef } from 'react'
 import { FcGoogle } from 'react-icons/fc'
-import { FiLogIn } from 'react-icons/fi'
+// import { FiLogIn } from 'react-icons/fi'
 
 const messages = [
   <>
@@ -54,7 +54,7 @@ export default function SignIn() {
           {/* <Image src='/images/mail.png' alt='mail' height={80} width={80} /> */}
           <span>Masuk dengan Google</span>
         </button>
-        <span className='text-xs text-slate-600'>atau</span>
+        {/* <span className='text-xs text-slate-600'>atau</span>
         <div className='flex flex-row gap-2 items-start'>
           <div className='flex flex-col gap-1'>
             <div className='relative h-10 w-80 max-[480px]:w-48 flex border-2 rounded-md text-sm'>
@@ -79,7 +79,7 @@ export default function SignIn() {
           >
             <FiLogIn className='text-white' />
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   )

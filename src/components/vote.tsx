@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import CandidateDesc from './candidateDesc'
 
 const IMAGE_BASE_URL =
   (process.env.SUPABASE_URL ?? '') + '/storage/v1/object/public/avatars/'
@@ -17,7 +18,11 @@ interface VoteProps {
 export default function Vote({ user, candidates }: VoteProps) {
   const [selectedId, setSelectedId] = useState<string | null>()
   const isSelected = selectedId !== undefined
-  const selectedName = candidates.find((c) => c.id === selectedId)?.name
+  const selected = candidates.find((c) => c.id === selectedId)
+
+  const selectedName = selected?.name
+  const selectedVisi = selected?.vision
+  const selectedMisi = selected?.mission
 
   const handleSubmitVote = async () => {
     if (!selectedId) {
@@ -90,6 +95,7 @@ export default function Vote({ user, candidates }: VoteProps) {
           </div>
         ))}
       </div>
+      <CandidateDesc visi={selectedVisi} misi={selectedMisi as string[]} />
     </div>
   )
 }
