@@ -49,3 +49,12 @@ export const checkVoteExists = async (email: string) => {
     .eq('email_enc', enc)
   return (data?.length ?? 0) > 0
 }
+
+export const getAllVotes = async () => {
+  const { data, error } = await supabase.from('votings').select()
+  const results = (data ?? []).map((v) => ({
+    choice: v.choice_id,
+    email: decrypt(v.email_enc),
+  }))
+  return results
+}
